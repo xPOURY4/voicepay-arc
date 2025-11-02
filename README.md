@@ -777,19 +777,19 @@ This project is licensed under the MIT License.
 
 ## 📈 Roadmap
 
-### Version 1.1.0 (Q1 2025)
+### Version 1.1.0 (Q4 2025)
 - [ ] Multi-language support
 - [ ] Voice biometric authentication
 - [ ] Split payment functionality
 - [ ] Bill payment integration
 
-### Version 1.2.0 (Q2 2025)
+### Version 1.2.0 (Q2 2026)
 - [ ] Wallet connection (MetaMask, WalletConnect)
 - [ ] Account abstraction integration
 - [ ] Gasless transactions
 - [ ] Mobile app (React Native)
 
-### Version 2.0.0 (Q4 2025)
+### Version 2.0.0 (Q4 2026)
 - [ ] Mainnet deployment
 - [ ] Additional token support
 - [ ] Advanced voice commands
