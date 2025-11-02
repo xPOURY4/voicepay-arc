@@ -31,7 +31,7 @@ git push -u origin main
 
 **Step 2: Deploy to Vercel**
 
-Click the button below or see [DEPLOY_GUIDE.md](./DEPLOY_GUIDE.md) for detailed instructions:
+Click the button below or see [DEPLOY_GUIDE.md](./QUICK_DEPLOY.md) for detailed instructions:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/YOUR_USERNAME/voicepay-arc&env=NEXT_PUBLIC_DEMO_MODE&envDescription=Set%20to%20true%20for%20demo%20mode&project-name=voicepay-arc)
 
