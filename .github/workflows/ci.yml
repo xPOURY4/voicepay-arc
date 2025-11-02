@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run TypeScript type check
+      run: npm run type-check
+
+    - name: Run ESLint
+      run: npm run lint
+      continue-on-error: true
+
+    - name: Build application
+      run: npm run build
+      env:
+        NEXT_PUBLIC_DEMO_MODE: true
+        NEXT_PUBLIC_ARC_RPC_URL: https://sepolia-rollup.arbitrum.io/rpc
+        NEXT_PUBLIC_USDC_CONTRACT: "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d"
+        NEXT_PUBLIC_ARC_CHAIN_ID: "421614"
+
+    - name: Upload build artifacts
+      if: matrix.node-version == '18.x'
+      uses: actions/upload-artifact@v4
+      with:
+        name: build
+        path: .next
+        retention-days: 7
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18.x'
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run npm audit
+      run: npm audit --audit-level=moderate
+      continue-on-error: true
+
+    - name: Check for known vulnerabilities
+      run: npm audit --production
+      continue-on-error: true
