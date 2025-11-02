@@ -17,6 +17,91 @@ import type {
   VoiceProcessingState,
 } from "@/lib/blockchain/types";
 
+// Lucide React Icons
+const MicIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+    <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+    <line x1="12" x2="12" y1="19" y2="22" />
+  </svg>
+);
+
+const StopIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="28"
+    height="28"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+  >
+    <rect x="6" y="6" width="12" height="12" rx="2" />
+  </svg>
+);
+
+const LoaderIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="animate-spin"
+  >
+    <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="3"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <polyline points="20 6 9 17 4 12" />
+  </svg>
+);
+
+const WaveformIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M2 10v4" />
+    <path d="M6 6v12" />
+    <path d="M10 3v18" />
+    <path d="M14 8v8" />
+    <path d="M18 5v14" />
+    <path d="M22 10v4" />
+  </svg>
+);
+
 interface VoiceRecorderProps {
   onCommandProcessed: (transcript: string, intent: PaymentIntent) => void;
   onError: (error: string) => void;
@@ -313,19 +398,19 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   const getButtonText = () => {
     switch (state) {
       case "idle":
-        return "Tap to Speak";
+        return "TAP TO SPEAK";
       case "requesting":
-        return "Requesting Mic...";
+        return "STARTING...";
       case "listening":
-        return "Listening...";
+        return "TAP TO STOP";
       case "processing":
-        return "Processing...";
+        return "PROCESSING...";
       case "complete":
-        return "Success!";
+        return "SUCCESS!";
       case "error":
-        return "Try Again";
+        return "TRY AGAIN";
       default:
-        return "Tap to Speak";
+        return "TAP TO SPEAK";
     }
   };
 
@@ -341,27 +426,57 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
   return (
     <div className="w-full max-w-md mx-auto">
       {/* Main Recording Button */}
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center py-8">
+        {/* Animated Ring for Listening State */}
+        <AnimatePresence>
+          {state === "listening" && (
+            <>
+              <motion.div
+                className="absolute w-48 h-48 rounded-full border-4 border-red-400"
+                initial={{ scale: 1, opacity: 0.5 }}
+                animate={{ scale: 1.3, opacity: 0 }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                }}
+              />
+              <motion.div
+                className="absolute w-48 h-48 rounded-full border-4 border-red-300"
+                initial={{ scale: 1, opacity: 0.5 }}
+                animate={{ scale: 1.5, opacity: 0 }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeOut",
+                  delay: 0.5,
+                }}
+              />
+            </>
+          )}
+        </AnimatePresence>
+
         {/* Waveform Visualization */}
         <AnimatePresence>
           {state === "listening" && (
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              className="absolute inset-0 flex items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute bottom-0 flex items-end justify-center space-x-1"
             >
-              {[...Array(5)].map((_, i) => (
+              {[...Array(7)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="w-1 bg-primary-500 rounded-full mx-1"
+                  className="w-2 bg-gradient-to-t from-red-500 to-pink-500 rounded-full"
                   animate={{
-                    height: [20, 60 * (audioLevel + 0.2), 20],
+                    height: [15, 40 * (audioLevel + 0.3), 15],
                   }}
                   transition={{
-                    duration: 0.5,
+                    duration: 0.4,
                     repeat: Infinity,
-                    delay: i * 0.1,
+                    delay: i * 0.08,
+                    ease: "easeInOut",
                   }}
                 />
               ))}
@@ -376,29 +491,86 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
             disabled || state === "processing" || state === "requesting"
           }
           className={`
-            relative z-10 w-32 h-32 rounded-full font-semibold text-white
-            shadow-2xl transition-all duration-300 min-touch
-            ${state === "listening" ? "bg-red-500 hover:bg-red-600 animate-recording" : ""}
-            ${state === "idle" ? "bg-primary-500 hover:bg-primary-600" : ""}
-            ${state === "processing" ? "bg-yellow-500 cursor-wait" : ""}
-            ${state === "complete" ? "bg-green-500" : ""}
-            ${state === "error" ? "bg-red-500" : ""}
+            relative z-10 w-40 h-40 rounded-full font-semibold text-white
+            shadow-2xl transition-all duration-300 overflow-hidden
+            ${state === "listening" ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700" : ""}
+            ${state === "idle" ? "bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700" : ""}
+            ${state === "processing" ? "bg-gradient-to-br from-amber-400 to-orange-500 cursor-wait" : ""}
+            ${state === "complete" ? "bg-gradient-to-br from-green-500 to-emerald-600" : ""}
+            ${state === "error" ? "bg-gradient-to-br from-red-500 to-pink-600" : ""}
             ${disabled ? "opacity-50 cursor-not-allowed" : ""}
           `}
-          whileHover={{ scale: disabled ? 1 : 1.05 }}
-          whileTap={{ scale: disabled ? 1 : 0.95 }}
+          whileHover={{ scale: disabled ? 1 : 1.08 }}
+          whileTap={{ scale: disabled ? 1 : 0.92 }}
+          animate={{
+            boxShadow:
+              state === "listening"
+                ? [
+                    "0 0 0 0 rgba(239, 68, 68, 0.7)",
+                    "0 0 0 20px rgba(239, 68, 68, 0)",
+                  ]
+                : "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+          }}
+          transition={{
+            boxShadow: {
+              duration: 1.5,
+              repeat: state === "listening" ? Infinity : 0,
+              ease: "easeOut",
+            },
+          }}
         >
-          <div className="flex flex-col items-center justify-center">
+          {/* Background Pulse Effect */}
+          {state === "listening" && (
+            <motion.div
+              className="absolute inset-0 bg-white opacity-20"
+              animate={{
+                scale: [1, 1.5],
+                opacity: [0.2, 0],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeOut",
+              }}
+            />
+          )}
+
+          <div className="relative flex flex-col items-center justify-center">
             {/* Icon */}
-            <span className="text-4xl mb-2">
-              {state === "listening" ? "🔴" : "🎤"}
-              {state === "processing" && "⏳"}
-              {state === "complete" && "✅"}
-              {state === "error" && "❌"}
-            </span>
+            <motion.div
+              animate={{
+                rotate: state === "processing" ? 360 : 0,
+                scale: state === "listening" ? [1, 1.1, 1] : 1,
+              }}
+              transition={{
+                rotate: {
+                  duration: 2,
+                  repeat: state === "processing" ? Infinity : 0,
+                  ease: "linear",
+                },
+                scale: {
+                  duration: 0.8,
+                  repeat: state === "listening" ? Infinity : 0,
+                },
+              }}
+            >
+              {state === "listening" && <StopIcon />}
+              {state === "idle" && <MicIcon />}
+              {state === "processing" && <LoaderIcon />}
+              {state === "complete" && <CheckIcon />}
+              {state === "error" && <MicIcon />}
+              {state === "requesting" && <LoaderIcon />}
+            </motion.div>
 
             {/* Text */}
-            <span className="text-sm">{getButtonText()}</span>
+            <motion.span
+              className="text-sm font-bold mt-3 tracking-wide"
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              {getButtonText()}
+            </motion.span>
           </div>
         </motion.button>
       </div>
@@ -410,9 +582,9 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="text-center mt-4"
+            className="text-center mt-6"
           >
-            <div className="text-2xl font-mono text-gray-700">
+            <div className="text-3xl font-bold text-red-600 bg-red-50 px-6 py-3 rounded-full inline-block shadow-lg">
               {formatTime(recordingTime)}
             </div>
             <button
@@ -442,6 +614,13 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               <p>"What's my balance?"</p>
               <p>"Show transaction history"</p>
             </div>
+            <motion.p
+              className="text-sm font-semibold text-gray-600 mt-3"
+              animate={{ opacity: [1, 0.5, 1] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              🔴 RECORDING
+            </motion.p>
           </motion.div>
         )}
       </AnimatePresence>
