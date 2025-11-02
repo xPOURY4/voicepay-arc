@@ -318,10 +318,28 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-8"
           >
-            <h1 className="text-4xl font-bold text-gray-800 mb-2">
-              🎤 VoicePay Arc
+            <h1
+              className="text-4xl font-bold mb-2 flex items-center gap-3"
+              style={{ color: "#1F2937" }}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#D97706"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                <line x1="12" x2="12" y1="19" y2="22" />
+              </svg>
+              VoicePay Arc
             </h1>
-            <p className="text-gray-600">
+            <p style={{ color: "#1F2937" }}>
               Voice-activated payments on Arc Testnet
             </p>
             {isDemoMode() && (
@@ -450,29 +468,41 @@ export default function Home() {
                 className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-full max-w-md mx-4"
               >
                 <div className="bg-white rounded-2xl shadow-2xl p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                  <h3
+                    className="text-xl font-bold mb-4"
+                    style={{ color: "#1F2937" }}
+                  >
                     Confirm Transaction
                   </h3>
 
                   <div className="space-y-4 mb-6">
                     <div>
                       <p className="text-sm text-gray-500 mb-1">You said:</p>
-                      <p className="text-gray-800 font-medium">
+                      <p className="font-medium" style={{ color: "#1F2937" }}>
                         "{currentCommand.transcript}"
                       </p>
                     </div>
 
-                    <div className="border-t border-gray-200 pt-4">
+                    <div
+                      className="pt-4"
+                      style={{ borderTop: "1px solid #D97706" }}
+                    >
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">Amount:</span>
-                        <span className="font-bold text-gray-800">
+                        <span style={{ color: "#1F2937" }}>Amount:</span>
+                        <span
+                          className="font-bold"
+                          style={{ color: "#D97706" }}
+                        >
                           {formatAmount(currentCommand.intent.amount)} USDC
                         </span>
                       </div>
 
                       <div className="flex justify-between mb-2">
-                        <span className="text-gray-600">To:</span>
-                        <span className="font-mono text-sm text-gray-800">
+                        <span style={{ color: "#1F2937" }}>To:</span>
+                        <span
+                          className="font-mono text-sm"
+                          style={{ color: "#1F2937" }}
+                        >
                           {currentCommand.intent.recipient
                             ? `${currentCommand.intent.recipient.slice(0, 6)}...${currentCommand.intent.recipient.slice(-4)}`
                             : "Unknown"}
@@ -480,8 +510,8 @@ export default function Home() {
                       </div>
 
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Network:</span>
-                        <span className="text-gray-800">Arc Testnet</span>
+                        <span style={{ color: "#1F2937" }}>Network:</span>
+                        <span style={{ color: "#1F2937" }}>Arc Testnet</span>
                       </div>
                     </div>
                   </div>

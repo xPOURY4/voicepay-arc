@@ -432,7 +432,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
           {state === "listening" && (
             <>
               <motion.div
-                className="absolute w-48 h-48 rounded-full border-4 border-red-400"
+                className="absolute w-48 h-48 rounded-full border-4 border-[#D97706]"
                 initial={{ scale: 1, opacity: 0.5 }}
                 animate={{ scale: 1.3, opacity: 0 }}
                 transition={{
@@ -442,7 +442,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
                 }}
               />
               <motion.div
-                className="absolute w-48 h-48 rounded-full border-4 border-red-300"
+                className="absolute w-48 h-48 rounded-full border-4 border-[#F59E0B]"
                 initial={{ scale: 1, opacity: 0.5 }}
                 animate={{ scale: 1.5, opacity: 0 }}
                 transition={{
@@ -468,7 +468,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               {[...Array(7)].map((_, i) => (
                 <motion.div
                   key={i}
-                  className="w-2 bg-gradient-to-t from-red-500 to-pink-500 rounded-full"
+                  className="w-2 bg-gradient-to-t from-[#D97706] to-[#F59E0B] rounded-full"
                   animate={{
                     height: [15, 40 * (audioLevel + 0.3), 15],
                   }}
@@ -494,8 +494,8 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
             relative z-10 w-40 h-40 rounded-full font-semibold text-white
             shadow-2xl transition-all duration-300 overflow-hidden
             ${state === "listening" ? "bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700" : ""}
-            ${state === "idle" ? "bg-gradient-to-br from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700" : ""}
-            ${state === "processing" ? "bg-gradient-to-br from-amber-400 to-orange-500 cursor-wait" : ""}
+            ${state === "idle" ? "bg-gradient-to-br from-[#D97706] to-[#F59E0B] hover:from-[#B45309] hover:to-[#D97706]" : ""}
+            ${state === "processing" ? "bg-gradient-to-br from-[#F59E0B] to-[#D97706] cursor-wait" : ""}
             ${state === "complete" ? "bg-gradient-to-br from-green-500 to-emerald-600" : ""}
             ${state === "error" ? "bg-gradient-to-br from-red-500 to-pink-600" : ""}
             ${disabled ? "opacity-50 cursor-not-allowed" : ""}
@@ -506,8 +506,8 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
             boxShadow:
               state === "listening"
                 ? [
-                    "0 0 0 0 rgba(239, 68, 68, 0.7)",
-                    "0 0 0 20px rgba(239, 68, 68, 0)",
+                    "0 0 0 0 rgba(217, 119, 6, 0.7)",
+                    "0 0 0 20px rgba(217, 119, 6, 0)",
                   ]
                 : "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
           }}
@@ -584,7 +584,7 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
             exit={{ opacity: 0, y: -10 }}
             className="text-center mt-6"
           >
-            <div className="text-3xl font-bold text-red-600 bg-red-50 px-6 py-3 rounded-full inline-block shadow-lg">
+            <div className="text-3xl font-bold text-[#1F2937] bg-[#FEEFCE] px-6 py-3 rounded-full inline-block shadow-lg">
               {formatTime(recordingTime)}
             </div>
             <button
@@ -615,11 +615,20 @@ export const VoiceRecorder: React.FC<VoiceRecorderProps> = ({
               <p>"Show transaction history"</p>
             </div>
             <motion.p
-              className="text-sm font-semibold text-gray-600 mt-3"
+              className="text-sm font-semibold text-[#D97706] mt-3 flex items-center justify-center gap-2"
               animate={{ opacity: [1, 0.5, 1] }}
               transition={{ duration: 1.5, repeat: Infinity }}
             >
-              🔴 RECORDING
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              RECORDING
             </motion.p>
           </motion.div>
         )}

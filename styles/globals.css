@@ -20,7 +20,8 @@
     }
 
     body {
-        @apply bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 min-h-screen;
+        @apply min-h-screen;
+        background-color: #feefce;
     }
 
     /* Custom scrollbar */
@@ -50,6 +51,7 @@
     /* Card */
     .card {
         @apply bg-white rounded-xl shadow-lg p-6;
+        color: #1f2937;
     }
 
     .card-hover {
@@ -74,7 +76,8 @@
     }
 
     .badge-primary {
-        @apply bg-primary-100 text-primary-800;
+        background-color: #feefce;
+        color: #d97706;
     }
 
     .badge-success {
@@ -241,15 +244,15 @@
 @keyframes tap-pulse {
     0% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+        box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7);
     }
     70% {
         transform: scale(1.05);
-        box-shadow: 0 0 0 20px rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 20px rgba(217, 119, 6, 0);
     }
     100% {
         transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+        box-shadow: 0 0 0 0 rgba(217, 119, 6, 0);
     }
 }
 
@@ -270,13 +273,13 @@
     0%,
     100% {
         box-shadow:
-            0 0 20px rgba(59, 130, 246, 0.3),
-            0 0 40px rgba(59, 130, 246, 0.2);
+            0 0 20px rgba(217, 119, 6, 0.3),
+            0 0 40px rgba(217, 119, 6, 0.2);
     }
     50% {
         box-shadow:
-            0 0 40px rgba(59, 130, 246, 0.5),
-            0 0 80px rgba(59, 130, 246, 0.3);
+            0 0 40px rgba(217, 119, 6, 0.5),
+            0 0 80px rgba(217, 119, 6, 0.3);
     }
 }
 
@@ -405,14 +408,19 @@
 
 /* Voice Waveform */
 .waveform-bar {
-    @apply bg-gradient-to-t from-blue-500 to-purple-500 rounded-full transition-all duration-100;
+    @apply rounded-full transition-all duration-100;
+    background: linear-gradient(to top, #d97706, #f59e0b);
 }
 
 /* Modern button with gradient */
 .btn-gradient-primary {
-    @apply bg-gradient-to-br from-blue-500 to-purple-600 text-white font-semibold;
+    @apply text-white font-semibold;
     @apply shadow-lg hover:shadow-xl transition-all duration-300;
-    @apply hover:from-blue-600 hover:to-purple-700;
+    background: linear-gradient(to bottom right, #d97706, #f59e0b);
+}
+
+.btn-gradient-primary:hover {
+    background: linear-gradient(to bottom right, #b45309, #d97706);
 }
 
 .btn-gradient-danger {
